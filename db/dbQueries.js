@@ -45,7 +45,13 @@ const updateEmployeeRole = (employeeId, newRoleId) => {
   return connection.promise().query('UPDATE employee SET role_id = ? WHERE id = ?', [newRoleId, employeeId]);
 };
 
-// New functions to fetch options for Inquirer prompts
+// New function to fetch employees for Inquirer prompts
+const getEmployees = async () => {
+    const [employees] = await connection.promise().query('SELECT id AS value, CONCAT(first_name, " ", last_name) AS name FROM employee');
+    return employees;
+  };
+
+// Functions to fetch options for Inquirer prompts
 const getDepartments = async () => {
   const [departments] = await connection.promise().query('SELECT id AS value, name FROM department');
   return departments;
@@ -74,4 +80,5 @@ module.exports = {
   getDepartments,
   getRoles,
   getManagers,
+  getEmployees, // Add the getEmployees function to the exports
 };

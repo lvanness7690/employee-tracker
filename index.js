@@ -12,13 +12,8 @@ const {
     getDepartments,
     getRoles,
     getManagers,
-  } = require('./db/dbQueries');
-const {
-    addDepartmentPrompt,
-    addRolePrompt,
-    addEmployeePrompt,
-    updateEmployeeRolePrompt,
-} = require('./prompts');
+    getEmployees, // Import the getEmployees function
+} = require('./db/dbQueries');
 
 async function startApp() {
     try {
@@ -54,33 +49,98 @@ async function startApp() {
                 console.table(employees);
                 break;
             case 'Add a department':
-                const { departmentName } = await addDepartmentPrompt();
+                const { departmentName } = await inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'departmentName',
+                        message: 'Enter the name of the department:',
+                        validate: input => input.trim() !== '' ? true : 'Department name cannot be empty.'
+                    }
+                ]);
                 await addDepartment(departmentName);
-                console.log('New department added!');
+                console.log('New department added successfully!');
                 break;
             case 'Add a role':
-                // Assume getDepartments() is a function that fetches departments and formats them for inquirer choices
-                const departmentsForRole = await getDepartments(); // This needs to be implemented
-                const roleDetails = await addRolePrompt(departmentsForRole);
-                await addRole(roleDetails.title, roleDetails.salary, roleDetails.departmentId);
-                console.log('New role added!');
+                const departmentsForRole = await getDepartments();
+                const { title, salary, departmentId } = await inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'title',
+                        message: 'Enter the title of the role:',
+                        validate: input => input.trim() !== '' ? true : 'Role title cannot be empty.'
+                    },
+                    {
+                        type: 'input',
+                        name: 'salary',
+                        message: 'Enter the salary for the role:',
+                        validate: input => /^\d+(\.\d{1,2})?$/.test(input) ? true : 'Invalid salary format. Please enter a number.'
+                    },
+                    {
+                        type: 'list',
+                        name: 'departmentId',
+                        message: 'Select the department for the role:',
+                        choices: departmentsForRole
+                    }
+                ]);
+                await addRole(title, salary, departmentId);
+                console.log('New role added successfully!');
                 break;
             case 'Add an employee':
-                const rolesForEmployee = await getRoles(); // This needs to be implemented
-                const managersForEmployee = await getManagers(); // This needs to be implemented
-                const employeeDetails = await addEmployeePrompt(rolesForEmployee, managersForEmployee);
-                await addEmployee(employeeDetails.firstName, employeeDetails.lastName, employeeDetails.roleId, employeeDetails.managerId);
-                console.log('New employee added!');
+                const rolesForEmployee = await getRoles();
+                const managersForEmployee = await getManagers();
+                const { firstName, lastName, roleId, managerId } = await inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'firstName',
+                        message: 'Enter the first name of the employee:',
+                        validate: input => input.trim() !== '' ? true : 'First name cannot be empty.'
+                    },
+                    {
+                        type: 'input',
+                        name: 'lastName',
+                        message: 'Enter the last name of the employee:',
+                        validate: input => input.trim() !== '' ? true : 'Last name cannot be empty.'
+                    },
+                    {
+                        type: 'list',
+                        name: 'roleId',
+                        message: 'Select the role for the employee:',
+                        choices: rolesForEmployee
+                    },
+                    {
+                        type: 'list',
+                        name: 'managerId',
+                        message: 'Select the manager for the employee:',
+                        choices: managersForEmployee
+                    }
+                ]);
+                await addEmployee(firstName, lastName, roleId, managerId);
+                console.log('New employee added successfully!');
                 break;
             case 'Update an employee role':
-                const employeesForUpdate = await getEmployees(); // This needs to be implemented
-                const rolesForUpdate = await getRoles(); // Reuse getRoles() here
-                const updateDetails = await updateEmployeeRolePrompt(employeesForUpdate, rolesForUpdate);
-                await updateEmployeeRole(updateDetails.employeeId, updateDetails.roleId);
-                console.log("Employee's role updated!");
+                const employeesForUpdate = await getEmployees(); // Fetch employees for selection
+                const rolesForUpdate = await getRoles();
+                const { employeeId } = await inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'employeeId',
+                        message: 'Select the employee whose role you want to update:',
+                        choices: employeesForUpdate // Use the fetched employees for selection
+                    }
+                ]);
+                const { newRoleId } = await inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'newRoleId',
+                        message: 'Select the new role for the employee:',
+                        choices: rolesForUpdate
+                    }
+                ]);
+                await updateEmployeeRole(employeeId, newRoleId);
+                console.log('Employee role updated successfully!');
                 break;
             case 'Exit':
-                console.log('Exiting Employee Tracker. Goodbye!');
+                console.log('Exiting the Employee Tracker. Goodbye!');
                 connection.end();
                 return;
             default:
@@ -99,6 +159,6 @@ connection.connect(err => {
         console.error('Error connecting to the database:', err);
         return;
     }
-    console.log('Database connected.');
+    console.log('Connected to the database.');
     startApp();
 });
