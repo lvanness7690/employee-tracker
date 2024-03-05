@@ -7,8 +7,7 @@ const viewAllDepartments = () => {
 const viewAllRoles = () => {
   return connection.promise().query(
     'SELECT role.id, role.title, department.name AS department, role.salary ' +
-    'FROM role ' +
-    'INNER JOIN department ON role.department_id = department.id'
+    'FROM role INNER JOIN department ON role.department_id = department.id'
   );
 };
 
@@ -25,9 +24,7 @@ const viewAllEmployees = () => {
 };
 
 const addDepartment = (departmentName) => {
-  return connection.promise().query(
-    'INSERT INTO department (name) VALUES (?)', [departmentName]
-  );
+  return connection.promise().query('INSERT INTO department (name) VALUES (?)', [departmentName]);
 };
 
 const addRole = (title, salary, departmentId) => {
@@ -40,14 +37,30 @@ const addRole = (title, salary, departmentId) => {
 const addEmployee = (firstName, lastName, roleId, managerId) => {
   return connection.promise().query(
     'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',
-    [firstName, lastName, roleId, managerId || null] // Allows null for no manager
+    [firstName, lastName, roleId, managerId]
   );
 };
 
 const updateEmployeeRole = (employeeId, newRoleId) => {
-  return connection.promise().query(
-    'UPDATE employee SET role_id = ? WHERE id = ?', [newRoleId, employeeId]
+  return connection.promise().query('UPDATE employee SET role_id = ? WHERE id = ?', [newRoleId, employeeId]);
+};
+
+// New functions to fetch options for Inquirer prompts
+const getDepartments = async () => {
+  const [departments] = await connection.promise().query('SELECT id AS value, name FROM department');
+  return departments;
+};
+
+const getRoles = async () => {
+  const [roles] = await connection.promise().query('SELECT id AS value, title AS name FROM role');
+  return roles;
+};
+
+const getManagers = async () => {
+  const [managers] = await connection.promise().query(
+    'SELECT id AS value, CONCAT(first_name, " ", last_name) AS name FROM employee WHERE manager_id IS NULL OR manager_id = id'
   );
+  return managers;
 };
 
 module.exports = {
@@ -58,4 +71,7 @@ module.exports = {
   addRole,
   addEmployee,
   updateEmployeeRole,
+  getDepartments,
+  getRoles,
+  getManagers,
 };

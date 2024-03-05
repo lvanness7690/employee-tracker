@@ -9,7 +9,10 @@ const {
     addRole,
     addEmployee,
     updateEmployeeRole,
-} = require('./db/dbQueries');
+    getDepartments,
+    getRoles,
+    getManagers,
+  } = require('./db/dbQueries');
 const {
     addDepartmentPrompt,
     addRolePrompt,
