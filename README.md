@@ -1,7 +1,7 @@
 # Employee Tracker
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Table of Contents\
+## Table of Contents
 * [Description](#description)
 * [Installation](#installation)
 * [Technologies Used](#technologies-used)
@@ -28,7 +28,7 @@ To install the Employee Tracker, follow these steps:
 
 ## Technologies Used
 
-This application is powered by Node.js (v16.19.1), JavaScript and SQL. It utilizes the node package manager (npm) dependencies sequelize (v6.31.0), mysql2 (v3.2.4), dotenv (16.0.3v), inquirer (
+This application is powered by Node.js (v16.19.1), JavaScript and SQL. It utilizes the node package manager (npm) dependencies sequelize (v6.31.0), mysql2 (v3.2.4), dotenv (16.0.3v), inquirer 
 
 ## Application Demo
 
