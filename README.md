@@ -7,7 +7,7 @@
 * [Technologies Used](#technologies-used)
 * [Application Demo](#application-demo)
 * [Usage](#usage)
-* [Feature](#features)
+* [Features](#features)
 * [Credits](#credits)
 * [License](#license)
 
