@@ -23,9 +23,8 @@ To install the Employee Tracker, follow these steps:
 2. Run `npm install` to install all the necessary dependencies.
 3. Ensure you have MySQL installed and running on your local machine.
 4. Set up your MySQL database using the schema provided in the `schema.sql` file.
-5. (Optional) Populate your database with initial data using the `seeds.sql` file.
-6. Create a `.env` file in the root directory and fill in your MySQL credentials like so:
-7. Run `node index.js` to start the application.
+5. Create a `.env` file in the root directory and fill in your MySQL credentials like so:
+6. Run `node index.js` to start the application.
 
 ## Technologies Used
 
