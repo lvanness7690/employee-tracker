@@ -27,6 +27,14 @@ To install the Employee Tracker, follow these steps:
 6. Create a `.env` file in the root directory and fill in your MySQL credentials like so:
 7. Run `node index.js` to start the application.
 
+## Technologies Used
+
+This application is powered by Node.js (v16.19.1), JavaScript and SQL. It utilizes the node package manager (npm) dependencies sequelize (v6.31.0), mysql2 (v3.2.4), dotenv (16.0.3v), inquirer (
+
+## Application Demo
+
+[Professional README Generator Demo Video](https://www.icloud.com/iclouddrive/045wdyNu0Q88haiJf81CrEJcQ#Employee_Tracker)
+
 ## Usage
 
 After installation, run the application with `node index.js`. You will be presented with a menu of options to:
