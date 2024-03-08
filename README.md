@@ -1,4 +1,15 @@
 # Employee Tracker
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Table of Contents\
+* [Description](#description)
+* [Installation](#installation)
+* [Technologies Used](#technologies-used)
+* [Application Demo](#application-demo)
+* [Usage](#usage)
+* [Feature](#features)
+* [Credits](#credits)
+* [License](#license)
 
 ## Description
 
@@ -26,26 +37,19 @@ After installation, run the application with `node index.js`. You will be presen
 
 Navigate through the prompts to manage your employee database.
 
-## Credits
-
-Developed by Leighton Van Ness.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE.txt).
-
----
-
 ## Features
 
 - Interactive prompts for managing the employee database
 - Viewing and updating tables of departments, roles, and employees
 - Adding new departments, roles, and employees to the database
 
-## How to Contribute
+## Credits
 
-Contributions are welcome! If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
+Developed by Leighton Van Ness.
 
-If you find any bugs or issues, please report them [here](https://github.com/lvanness7690/employee-tracker/issues).
+## License
+
+Please refer to the license in the repo.
+
 
 
